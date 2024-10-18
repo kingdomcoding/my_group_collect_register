@@ -1,6 +1,14 @@
 defmodule MyGroupCollectRegisterWeb.RegisterLive.Page1Form do
   use MyGroupCollectRegisterWeb, :live_component
 
+  alias MyGroupCollectRegisterWeb.RegisterLive.Page1FormFields
+
+  def update(_assigns, socket) do
+    form = AshPhoenix.Form.for_create(Page1FormFields, :submit, domain: MyGroupCollectRegisterWeb.RegisterDomain) |> to_form()
+
+    {:ok, assign(socket, :form, form)}
+  end
+
   def render(assigns) do
     ~H"""
     <section class="bg-gray-50 dark:bg-gray-900">
