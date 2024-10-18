@@ -1,15 +1,14 @@
 defmodule MyGroupCollectRegisterWeb.RegisterLive do
   use MyGroupCollectRegisterWeb, :live_view
-  # account_id
+  
   def handle_params(%{"account_id" => account_id} = _unsigned_params, _uri, %{assigns: %{live_action: :confirm_email}} = socket) do
     # TODO: Dispatch command
-    registration_id = Ash.UUID.generate()
 
-    {:noreply, push_patch(socket, to: ~p"/register/#{registration_id}/confirm-adult")}
+    {:noreply, push_patch(socket, to: ~p"/register/#{account_id}/confirm-adult")}
   end
 
-  def handle_params(%{"registration_id" => registration_id} = _unsigned_params, _uri, socket) do
-    {:noreply, assign(socket, :registration_id, registration_id)}
+  def handle_params(%{"account_id" => account_id} = _unsigned_params, _uri, socket) do
+    {:noreply, assign(socket, :account_id, account_id)}
   end
 
   def handle_params(_unsigned_params, _uri, socket) do
@@ -71,7 +70,7 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
   def handle_info(:confirm_adult_form_submitted, socket) do
     socket =
       socket
-      |> push_patch(to: ~p"/register/#{socket.assigns.registration_id}/account-holder-profile")
+      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/account-holder-profile")
 
     {:noreply, socket}
   end

@@ -46,6 +46,7 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive.ConfirmAdultForm do
 
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, form_struct} ->
+        # TODO: Dispatch command
         # {:ok, %{account_id: account_id}} = MyGroupCollectRegister.Commands.CreateAnAccount.dispatch_command(form_params)
 
         send(self(), :confirm_adult_form_submitted)
