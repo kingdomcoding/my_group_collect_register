@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :my_group_collect_register, event_stores: [MyGroupCollectRegister.EventStore]
+
 config :spark, formatter: ["Ash.Resource": [section_order: [:postgres]]]
 
 config :my_group_collect_register,

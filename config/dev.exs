@@ -10,6 +10,15 @@ config :my_group_collect_register, MyGroupCollectRegister.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :my_group_collect_register, MyGroupCollectRegister.EventStore,
+  serializer: Commanded.Serialization.JsonSerializer,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "my_group_collect_register_dev",
+  schema: "event_store",
+  pool_size: 10
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

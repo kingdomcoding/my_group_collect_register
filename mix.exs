@@ -76,10 +76,10 @@ defmodule MyGroupCollectRegister.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      setup: ["deps.get", "ecto.setup", "event_store.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ash.setup --quiet", "test"],
+      test: ["ash.setup --quiet", "event_store.setup", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind my_group_collect_register", "esbuild my_group_collect_register"],
       "assets.deploy": [
@@ -87,7 +87,8 @@ defmodule MyGroupCollectRegister.MixProject do
         "esbuild my_group_collect_register --minify",
         "phx.digest"
       ],
-      "ash.setup": ["ash.setup", "run priv/repo/seeds.exs"]
+      "ash.setup": ["ash.setup", "run priv/repo/seeds.exs"],
+      "event_store.setup": ["event_store.create", "event_store.init"]
     ]
   end
 end

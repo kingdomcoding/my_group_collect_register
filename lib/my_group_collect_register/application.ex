@@ -5,6 +5,13 @@ defmodule MyGroupCollectRegister.Application do
 
   use Application
 
+  use Commanded.Application,
+    otp_app: :my_group_collect_register,
+    event_store: [
+      adapter: Commanded.EventStore.Adapters.EventStore,
+      event_store: MyGroupCollectRegister.EventStore
+    ]
+
   @impl true
   def start(_type, _args) do
     children = [
