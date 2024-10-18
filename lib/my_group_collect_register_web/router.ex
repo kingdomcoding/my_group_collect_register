@@ -18,7 +18,7 @@ defmodule MyGroupCollectRegisterWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/register", RegisterLive
+    live "/register", RegisterLive, :page_1
   end
 
   # Other scopes may use custom stacks.
