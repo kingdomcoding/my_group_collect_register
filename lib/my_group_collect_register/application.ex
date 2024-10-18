@@ -12,6 +12,8 @@ defmodule MyGroupCollectRegister.Application do
       event_store: MyGroupCollectRegister.EventStore
     ]
 
+  router MyGroupCollectRegister.Commands.Router
+
   @impl true
   def start(_type, _args) do
     children = [
@@ -25,7 +27,8 @@ defmodule MyGroupCollectRegister.Application do
       # Start a worker by calling: MyGroupCollectRegister.Worker.start_link(arg)
       # {MyGroupCollectRegister.Worker, arg},
       # Start to serve requests, typically the last entry
-      MyGroupCollectRegisterWeb.Endpoint
+      MyGroupCollectRegisterWeb.Endpoint,
+      __MODULE__,
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

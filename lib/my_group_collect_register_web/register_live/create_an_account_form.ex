@@ -48,10 +48,7 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive.CreateAnAccountForm do
 
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, _form_struct} ->
-        account_id = Ash.UUID.generate()
-
-        # TODO: Issue command
-        # {:ok, %{account_id: account_id}} = MyGroupCollectRegister.Commands.CreateAnAccount.dispatch_command(%{email: form_struct.email, password: form_struct.password})
+        {:ok, %{account_id: account_id}} = MyGroupCollectRegister.Commands.CreateAnAccount.dispatch_command(form_params)
 
         send(self(), {:create_an_account_form_submitted, account_id})
         {:noreply, socket}
