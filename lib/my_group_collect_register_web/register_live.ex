@@ -5,9 +5,9 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
     {:noreply, socket}
   end
 
-  def render(%{live_action: :page_1} = assigns) do
+  def render(%{live_action: :create_an_account} = assigns) do
     ~H"""
-    <.live_component module={__MODULE__.Page1Form} id="page_1" />
+    <.live_component module={__MODULE__.CreateAnAccountForm} id="create_an_account_form" />
     """
   end
 
@@ -19,7 +19,7 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
 
   def handle_info(:form_submitted, socket) do
     case socket.assigns.live_action do
-      :page_1 ->
+      :create_an_account ->
         {:noreply, push_patch(socket, to: ~p"/register/check-email")}
     end
   end

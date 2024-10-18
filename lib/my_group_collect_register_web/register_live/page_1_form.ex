@@ -1,10 +1,10 @@
-defmodule MyGroupCollectRegisterWeb.RegisterLive.Page1Form do
+defmodule MyGroupCollectRegisterWeb.RegisterLive.CreateAnAccountForm do
   use MyGroupCollectRegisterWeb, :live_component
 
-  alias MyGroupCollectRegisterWeb.RegisterLive.Page1FormFields
+  alias MyGroupCollectRegisterWeb.RegisterLive.CreateAnAccountFormFields
 
   def update(_assigns, socket) do
-    form = AshPhoenix.Form.for_create(Page1FormFields, :submit, domain: MyGroupCollectRegisterWeb.RegisterDomain) |> to_form()
+    form = AshPhoenix.Form.for_create(CreateAnAccountFormFields, :submit, domain: MyGroupCollectRegisterWeb.RegisterDomain) |> to_form()
 
     {:ok, assign(socket, :form, form)}
   end
@@ -49,7 +49,7 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive.Page1Form do
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, _form_struct} ->
         # TODO: Issue command
-        
+
         send(self(), :form_submitted)
         {:noreply, socket}
       {:error, form_with_error} ->

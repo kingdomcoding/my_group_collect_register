@@ -18,7 +18,7 @@ defmodule MyGroupCollectRegisterWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/register", RegisterLive, :page_1
+    live "/register", RegisterLive, :create_an_account
     live "/register/check-email", RegisterLive, :check_email
   end
 
