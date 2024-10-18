@@ -10,8 +10,6 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive.Page1Form do
   end
 
   def render(assigns) do
-    # TODO: Add url linking
-    # <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms of Service</a>
     ~H"""
     <section class="bg-gray-50 dark:bg-gray-900">
       <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -50,7 +48,9 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive.Page1Form do
 
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, _form_struct} ->
-        # TODO: Navigate to next page
+        # TODO: Issue command
+        
+        send(self(), :form_submitted)
         {:noreply, socket}
       {:error, form_with_error} ->
         {:noreply, assign(socket, :form, form_with_error)}

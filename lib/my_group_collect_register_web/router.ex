@@ -19,6 +19,7 @@ defmodule MyGroupCollectRegisterWeb.Router do
 
     get "/", PageController, :home
     live "/register", RegisterLive, :page_1
+    live "/register/check-email", RegisterLive, :check_email
   end
 
   # Other scopes may use custom stacks.
