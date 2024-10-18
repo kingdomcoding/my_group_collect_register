@@ -10,7 +10,8 @@ defmodule MyGroupCollectRegister.Application do
     children = [
       MyGroupCollectRegisterWeb.Telemetry,
       MyGroupCollectRegister.Repo,
-      {DNSCluster, query: Application.get_env(:my_group_collect_register, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:my_group_collect_register, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: MyGroupCollectRegister.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: MyGroupCollectRegister.Finch},

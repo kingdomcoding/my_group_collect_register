@@ -58,7 +58,13 @@ defmodule MyGroupCollectRegister.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:ash, "~> 3.4"},
+      {:ash_phoenix, "~> 2.1"},
+      {:ash_postgres, "~> 2.4"},
+      {:commanded, "~> 1.4"},
+      {:eventstore, "~> 1.4"},
+      {:commanded_eventstore_adapter, "~> 1.4"}
     ]
   end
 
@@ -73,14 +79,15 @@ defmodule MyGroupCollectRegister.MixProject do
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: ["ash.setup --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind my_group_collect_register", "esbuild my_group_collect_register"],
       "assets.deploy": [
         "tailwind my_group_collect_register --minify",
         "esbuild my_group_collect_register --minify",
         "phx.digest"
-      ]
+      ],
+      "ash.setup": ["ash.setup", "run priv/repo/seeds.exs"]
     ]
   end
 end
