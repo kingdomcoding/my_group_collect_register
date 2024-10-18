@@ -8,9 +8,21 @@ defmodule MyGroupCollectRegister.Commands.Router do
   dispatch(CreateAnAccount, to: __MODULE__, identity: :account_id)
 
   def execute(_state, %CreateAnAccount{} = command) do
-    # TODO: Emit event
+    %{
+      account_id: account_id,
+      email: email,
+      password: password,
+      agree_to_terms?: agree_to_terms?,
+    } = command
 
-    {:ok, []}
+    params = %{
+      account_id: account_id,
+      email: email,
+      password: password,
+      agree_to_terms?: agree_to_terms?,
+    }
+
+    {:ok, event} = MyGroupCollectRegister.Events.AccountCreated.create(params)
   end
 
   def apply(state, _event) do

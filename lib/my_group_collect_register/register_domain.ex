@@ -3,5 +3,6 @@ defmodule MyGroupCollectRegister.RegisterDomain do
 
   resources do
     resource MyGroupCollectRegister.Commands.CreateAnAccount
+    resource MyGroupCollectRegister.Events.AccountCreated
   end
 end
