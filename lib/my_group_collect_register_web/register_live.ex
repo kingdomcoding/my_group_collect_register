@@ -8,6 +8,10 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
     {:noreply, push_patch(socket, to: ~p"/register/#{registration_id}/confirm-adult")}
   end
 
+  def handle_params(%{"registration_id" => registration_id} = _unsigned_params, _uri, socket) do
+    {:noreply, assign(socket, :registration_id, registration_id)}
+  end
+
   def handle_params(_unsigned_params, _uri, socket) do
     {:noreply, socket}
   end
@@ -45,7 +49,13 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
 
   def render(%{live_action: :confirm_adult} = assigns) do
     ~H"""
-    <h1>Confirm adult</h1>
+    <.live_component module={__MODULE__.ConfirmAdultForm} id="confirm_adult_form" />
+    """
+  end
+
+  def render(%{live_action: :account_holder_profile} = assigns) do
+    ~H"""
+    <h1>Account Holder Profile</h1>
     """
   end
 
@@ -54,6 +64,14 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
       socket
       |> assign(:account_id, account_id)
       |> push_patch(to: ~p"/register/check-email")
+
+    {:noreply, socket}
+  end
+
+  def handle_info(:confirm_adult_form_submitted, socket) do
+    socket =
+      socket
+      |> push_patch(to: ~p"/register/#{socket.assigns.registration_id}/account-holder-profile")
 
     {:noreply, socket}
   end

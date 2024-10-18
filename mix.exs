@@ -64,7 +64,8 @@ defmodule MyGroupCollectRegister.MixProject do
       {:ash_postgres, "~> 2.4"},
       {:commanded, "~> 1.4"},
       {:eventstore, "~> 1.4"},
-      {:commanded_eventstore_adapter, "~> 1.4"}
+      {:commanded_eventstore_adapter, "~> 1.4"},
+      {:timex, "~> 3.7"},
     ]
   end
 

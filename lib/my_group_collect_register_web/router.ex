@@ -22,6 +22,7 @@ defmodule MyGroupCollectRegisterWeb.Router do
     live "/register/check-email", RegisterLive, :check_email
     live "/register/confirm-email/:account_id", RegisterLive, :confirm_email
     live "/register/:registration_id/confirm-adult", RegisterLive, :confirm_adult
+    live "/register/:registration_id/account-holder-profile", RegisterLive, :account_holder_profile
   end
 
   # Other scopes may use custom stacks.
