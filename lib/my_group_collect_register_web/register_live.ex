@@ -14,13 +14,16 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
   def render(%{live_action: :check_email} = assigns) do
     ~H"""
     <p>Check your email</p>
+    <p><%= @account_id %></p>
     """
   end
 
-  def handle_info(:form_submitted, socket) do
-    case socket.assigns.live_action do
-      :create_an_account ->
-        {:noreply, push_patch(socket, to: ~p"/register/check-email")}
-    end
+  def handle_info({:create_an_account_form_submitted, account_id}, socket) do
+    socket =
+      socket
+      |> assign(:account_id, account_id)
+      |> push_patch(to: ~p"/register/check-email")
+
+    {:noreply, socket}
   end
 end
