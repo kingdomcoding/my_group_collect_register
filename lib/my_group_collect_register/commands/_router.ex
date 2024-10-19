@@ -6,6 +6,7 @@ defmodule MyGroupCollectRegister.Commands.Router do
     ConfirmEmail,
     ConfirmAdult,
     SubmitAccountHolderProfile,
+    SubmitAddress,
   }
 
   defstruct [:account_id]
@@ -14,6 +15,7 @@ defmodule MyGroupCollectRegister.Commands.Router do
   dispatch(ConfirmEmail, to: __MODULE__, identity: :account_id)
   dispatch(ConfirmAdult, to: __MODULE__, identity: :account_id)
   dispatch(SubmitAccountHolderProfile, to: __MODULE__, identity: :account_id)
+  dispatch(SubmitAddress, to: __MODULE__, identity: :account_id)
 
   def execute(_state, %CreateAnAccount{} = command) do
     %{
@@ -57,6 +59,28 @@ defmodule MyGroupCollectRegister.Commands.Router do
     }
 
     {:ok, _event} = MyGroupCollectRegister.Events.AccountHolderProfileSubmitted.create(params)
+  end
+
+  def execute(_state, %SubmitAddress{} = command) do
+    %{
+      account_id: account_id,
+      street: street,
+      city: city,
+      state: state,
+      zip: zip,
+      country: country,
+    } = command
+
+    params = %{
+      account_id: account_id,
+      street: street,
+      city: city,
+      state: state,
+      zip: zip,
+      country: country,
+    }
+
+    {:ok, _event} = MyGroupCollectRegister.Events.AddressSubmitted.create(params)
   end
 
   def apply(state, _event) do

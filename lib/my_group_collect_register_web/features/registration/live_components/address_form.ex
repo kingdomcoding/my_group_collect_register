@@ -64,7 +64,7 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.Address
           country: form_struct.country,
         }
 
-        # {:ok, _command} = MyGroupCollectRegister.Commands.SubmitAddress.dispatch_command(params)
+        {:ok, _command} = MyGroupCollectRegister.Commands.SubmitAddress.dispatch_command(params)
 
         send(self(), :address_form_submitted)
         {:noreply, socket}
