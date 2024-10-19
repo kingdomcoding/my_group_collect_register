@@ -5,6 +5,7 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
     CreateAnAccountForm,
     ConfirmAdultForm,
     AccountHolderProfileForm,
+    AddressForm,
   }
 
   def handle_params(%{"account_id" => account_id} = _unsigned_params, _uri, %{assigns: %{live_action: :confirm_email}} = socket) do
@@ -64,10 +65,16 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
     """
   end
 
-  def render(%{live_action: :where_do_you_live} = assigns) do
-    # <.live_component module={AccountHolderProfileForm} id="account_holder_profile_form" account_id={@account_id} />
+  def render(%{live_action: :address} = assigns) do
     ~H"""
-    <h1>Where do you live?</h1>
+    <.live_component module={AddressForm} id="address_form" account_id={@account_id} />
+    """
+  end
+
+  def render(%{live_action: :will_you_be_travelling} = assigns) do
+    # <.live_component module={AddressForm} id="address_form" account_id={@account_id} />
+    ~H"""
+    Will you be travelling?
     """
   end
 
@@ -91,7 +98,15 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
   def handle_info(:account_holder_profile_form_submitted, socket) do
     socket =
       socket
-      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/where-do-you-live")
+      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/address")
+
+    {:noreply, socket}
+  end
+
+  def handle_info(:address_form_submitted, socket) do
+    socket =
+      socket
+      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/will-you-be-travelling")
 
     {:noreply, socket}
   end
