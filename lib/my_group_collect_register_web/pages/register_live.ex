@@ -9,14 +9,14 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
     WillYouBeTravellingForm,
   }
 
-  def handle_params(%{"account_id" => account_id} = _unsigned_params, _uri, %{assigns: %{live_action: :confirm_email}} = socket) do
+  def handle_params(%{"account_id" => account_id, "trip_id" => trip_id} = _unsigned_params, _uri, %{assigns: %{live_action: :confirm_email}} = socket) do
     {:ok, _command} = MyGroupCollectRegister.Commands.ConfirmEmail.dispatch_command(%{account_id: account_id})
 
-    {:noreply, push_patch(socket, to: ~p"/register/#{account_id}/confirm-adult")}
+    {:noreply, push_patch(socket, to: ~p"/register/#{account_id}/confirm-adult?#{%{trip_id: trip_id}}")}
   end
 
-  def handle_params(%{"account_id" => account_id} = _unsigned_params, _uri, socket) do
-    {:noreply, assign(socket, :account_id, account_id)}
+  def handle_params(%{"account_id" => account_id, "trip_id" => trip_id} = _unsigned_params, _uri, socket) do
+    {:noreply, assign(socket, account_id: account_id, trip_id: trip_id)}
   end
 
   def handle_params(_unsigned_params, _uri, socket) do
@@ -45,7 +45,7 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
                       Well, not really :)
                   </p>
                   <p class="text-sm">
-                      Just <a href={~p"/register/confirm-email/#{@account_id}"} class="font-medium text-primary-600 hover:underline dark:text-primary-500">click to confirm your email addrees</a>
+                      Just <a href={~p"/register/confirm-email/#{@account_id}?#{%{trip_id: Ash.UUID.generate()}}"} class="font-medium text-primary-600 hover:underline dark:text-primary-500">click to confirm your email addrees</a>
                   </p>
               </div>
           </div>
@@ -97,7 +97,7 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
   def handle_info(:confirm_adult_form_submitted, socket) do
     socket =
       socket
-      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/account-holder-profile")
+      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/account-holder-profile?#{%{trip_id: socket.assigns.trip_id}}")
 
     {:noreply, socket}
   end
@@ -105,7 +105,7 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
   def handle_info(:account_holder_profile_form_submitted, socket) do
     socket =
       socket
-      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/address")
+      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/address?#{%{trip_id: socket.assigns.trip_id}}")
 
     {:noreply, socket}
   end
@@ -113,7 +113,7 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
   def handle_info(:address_form_submitted, socket) do
     socket =
       socket
-      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/will-you-be-travelling")
+      |> push_patch(to: ~p"/register/#{socket.assigns.trip_id}/will-you-be-travelling?#{%{trip_id: socket.assigns.trip_id}}")
 
     {:noreply, socket}
   end
@@ -124,7 +124,7 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
         socket = put_flash(socket, :error, "Self registration not included in this demo. Please select \"No\"")
         {:noreply, socket}
       :no ->
-        socket = push_patch(socket, to: ~p"/register/#{socket.assigns.account_id}/add-passenger")
+        socket = push_patch(socket, to: ~p"/register/#{socket.assigns.account_id}/add-passenger?#{%{trip_id: socket.assigns.trip_id}}")
         {:noreply, socket}
     end
   end
