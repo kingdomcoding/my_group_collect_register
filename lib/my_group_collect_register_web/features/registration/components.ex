@@ -6,10 +6,8 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.Components do
   attr :options, :list, required: true
 
   def radio_group(assigns) do
-    # TODO: Translate errors
-    errors = if Phoenix.Component.used_input?(assigns.field), do: assigns.field.errors, else: []
-
-    assigns = assign(assigns, :errors, Enum.map(errors, &translate_error(&1)))
+    assigns = assign(assigns, :errors, Enum.map(assigns.field.errors, &translate_error(&1)))
+    
     ~H"""
     <div>
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
