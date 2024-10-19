@@ -53,12 +53,14 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.Account
 
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, form_struct} ->
-        # params = %{
-        #   account_id: socket.assigns.account_id,
-        #   date_of_birth: form_struct.date_of_birth
-        # }
+        params = %{
+          account_id: socket.assigns.account_id,
+          first_name: form_struct.first_name,
+          last_name: form_struct.last_name,
+          phone_number: form_struct.phone_number,
+        }
 
-        # {:ok, _command} = MyGroupCollectRegister.Commands.SubmitAccountHolderProfile.dispatch_command(params)
+        {:ok, _command} = MyGroupCollectRegister.Commands.SubmitAccountHolderProfile.dispatch_command(params)
 
         send(self(), :account_holder_profile_form_submitted)
         {:noreply, socket}
