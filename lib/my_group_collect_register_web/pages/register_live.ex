@@ -6,6 +6,7 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
     ConfirmAdultForm,
     AccountHolderProfileForm,
     AddressForm,
+    WillYouBeTravellingForm,
   }
 
   def handle_params(%{"account_id" => account_id} = _unsigned_params, _uri, %{assigns: %{live_action: :confirm_email}} = socket) do
@@ -72,9 +73,15 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
   end
 
   def render(%{live_action: :will_you_be_travelling} = assigns) do
-    # <.live_component module={AddressForm} id="address_form" account_id={@account_id} />
     ~H"""
-    Will you be travelling?
+    <.live_component module={WillYouBeTravellingForm} id="will_you_be_travelling_form" account_id={@account_id} />
+    """
+  end
+
+  def render(%{live_action: :add_passenger} = assigns) do
+    # <.live_component module={WillYouBeTravellingForm} id="will_you_be_travelling_form" account_id={@account_id} />
+    ~H"""
+    Add passenger
     """
   end
 
@@ -109,5 +116,16 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
       |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/will-you-be-travelling")
 
     {:noreply, socket}
+  end
+
+  def handle_info({:will_you_be_travelling_form_submitted, response}, socket) do
+    case response do
+      :yes ->
+        socket = put_flash(socket, :error, "Self registration not included in this demo. Please select \"No\"")
+        {:noreply, socket}
+      :no ->
+        socket = push_patch(socket, to: ~p"/register/#{socket.assigns.account_id}/add-passenger")
+        {:noreply, socket}
+    end
   end
 end
