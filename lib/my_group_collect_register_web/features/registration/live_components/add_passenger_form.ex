@@ -55,12 +55,14 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.AddPass
 
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, form_struct} ->
-        params = %{
-          account_id: socket.assigns.account_id,
-          date_of_birth: form_struct.date_of_birth
-        }
+        # TODO
+        
+        # params = %{
+        #   account_id: socket.assigns.account_id,
+        #   date_of_birth: form_struct.date_of_birth
+        # }
 
-        {:ok, _command} = MyGroupCollectRegister.Commands.ConfirmAdult.dispatch_command(params)
+        # {:ok, _command} = MyGroupCollectRegister.Commands.ConfirmAdult.dispatch_command(params)
 
         send(self(), :confirm_adult_form_submitted)
         {:noreply, socket}
