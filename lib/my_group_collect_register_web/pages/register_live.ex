@@ -7,6 +7,7 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
     AccountHolderProfileForm,
     AddressForm,
     WillYouBeTravellingForm,
+    AddPassengerForm,
   }
 
   def handle_params(%{"account_id" => account_id, "trip_id" => trip_id} = _unsigned_params, _uri, %{assigns: %{live_action: :confirm_email}} = socket) do
@@ -79,9 +80,8 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
   end
 
   def render(%{live_action: :add_passenger} = assigns) do
-    # <.live_component module={WillYouBeTravellingForm} id="will_you_be_travelling_form" account_id={@account_id} />
     ~H"""
-    Add passenger
+    <.live_component module={AddPassengerForm} id="add_passenger_form" account_id={@account_id} trip_id={@trip_id} />
     """
   end
 
