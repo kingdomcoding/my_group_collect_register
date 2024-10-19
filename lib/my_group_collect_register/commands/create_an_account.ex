@@ -1,5 +1,5 @@
 defmodule MyGroupCollectRegister.Commands.CreateAnAccount do
-  use Ash.Resource, domain: MyGroupCollectRegister.RegisterDomain
+  use Ash.Resource, domain: MyGroupCollectRegister.Domain
 
   attributes do
     uuid_primary_key :account_id

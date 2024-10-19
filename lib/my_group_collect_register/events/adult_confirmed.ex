@@ -1,5 +1,5 @@
 defmodule MyGroupCollectRegister.Events.AdultConfirmed do
-  use Ash.Resource, domain: MyGroupCollectRegister.RegisterDomain
+  use Ash.Resource, domain: MyGroupCollectRegister.Domain
 
   @derive {Jason.Encoder, only: [
     :account_id,

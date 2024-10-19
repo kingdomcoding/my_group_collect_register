@@ -1,4 +1,4 @@
-defmodule MyGroupCollectRegister.RegisterDomain do
+defmodule MyGroupCollectRegister.Domain do
   use Ash.Domain
 
   resources do

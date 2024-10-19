@@ -1,5 +1,5 @@
 defmodule MyGroupCollectRegister.Commands.ConfirmAdult do
-  use Ash.Resource, domain: MyGroupCollectRegister.RegisterDomain
+  use Ash.Resource, domain: MyGroupCollectRegister.Domain
 
   attributes do
     attribute :account_id, :uuid, primary_key?: true, allow_nil?: false
