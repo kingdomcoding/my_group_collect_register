@@ -3,10 +3,14 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive.ConfirmAdultForm do
 
   alias MyGroupCollectRegisterWeb.RegisterLive.ConfirmAdultFormFields
 
-  def update(_assigns, socket) do
+  def update(%{account_id: account_id} = _assigns, socket) do
     form = AshPhoenix.Form.for_create(ConfirmAdultFormFields, :submit, domain: MyGroupCollectRegisterWeb.RegisterDomain) |> to_form()
 
-    {:ok, assign(socket, :form, form)}
+    socket =
+      socket
+      |> assign(:form, form)
+      |> assign(:account_id, account_id)
+    {:ok, socket}
   end
 
   def render(assigns) do
@@ -46,8 +50,12 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive.ConfirmAdultForm do
 
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, form_struct} ->
-        # TODO: Dispatch command
-        # {:ok, %{account_id: account_id}} = MyGroupCollectRegister.Commands.CreateAnAccount.dispatch_command(form_params)
+        params = %{
+          account_id: socket.assigns.account_id,
+          date_of_birth: form_struct.date_of_birth
+        }
+
+        {:ok, _command} = MyGroupCollectRegister.Commands.ConfirmAdult.dispatch_command(params)
 
         send(self(), :confirm_adult_form_submitted)
         {:noreply, socket}

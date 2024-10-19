@@ -48,7 +48,7 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
 
   def render(%{live_action: :confirm_adult} = assigns) do
     ~H"""
-    <.live_component module={__MODULE__.ConfirmAdultForm} id="confirm_adult_form" />
+    <.live_component module={__MODULE__.ConfirmAdultForm} id="confirm_adult_form" account_id={@account_id} />
     """
   end
 
