@@ -1,10 +1,8 @@
-defmodule MyGroupCollectRegisterWeb.RegisterLive.CreateAnAccountForm do
+defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.CreateAnAccountForm do
   use MyGroupCollectRegisterWeb, :live_component
 
-  alias MyGroupCollectRegisterWeb.RegisterLive.CreateAnAccountFormFields
-
   def update(_assigns, socket) do
-    form = AshPhoenix.Form.for_create(CreateAnAccountFormFields, :submit, domain: MyGroupCollectRegisterWeb.RegisterDomain) |> to_form()
+    form = AshPhoenix.Form.for_create(__MODULE__.Fields, :submit, domain: MyGroupCollectRegisterWeb.Features.Registration.Domain) |> to_form()
 
     {:ok, assign(socket, :form, form)}
   end

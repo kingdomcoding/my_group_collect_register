@@ -1,4 +1,4 @@
-defmodule MyGroupCollectRegisterWeb.RegisterLive.ConfirmAdultFormFields do
+defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.ConfirmAdultForm.Fields do
   use Ash.Resource, data_layer: :embedded
 
   attributes do

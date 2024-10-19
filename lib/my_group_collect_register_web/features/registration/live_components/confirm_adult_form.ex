@@ -1,10 +1,8 @@
-defmodule MyGroupCollectRegisterWeb.RegisterLive.ConfirmAdultForm do
+defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.ConfirmAdultForm do
   use MyGroupCollectRegisterWeb, :live_component
 
-  alias MyGroupCollectRegisterWeb.RegisterLive.ConfirmAdultFormFields
-
   def update(%{account_id: account_id} = _assigns, socket) do
-    form = AshPhoenix.Form.for_create(ConfirmAdultFormFields, :submit, domain: MyGroupCollectRegisterWeb.RegisterDomain) |> to_form()
+    form = AshPhoenix.Form.for_create(__MODULE__.Fields, :submit, domain: MyGroupCollectRegisterWeb.Features.Registration.Domain) |> to_form()
 
     socket =
       socket

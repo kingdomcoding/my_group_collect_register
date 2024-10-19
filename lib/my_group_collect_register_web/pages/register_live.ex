@@ -1,5 +1,10 @@
-defmodule MyGroupCollectRegisterWeb.RegisterLive do
+defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
   use MyGroupCollectRegisterWeb, :live_view
+
+  alias MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.{
+    CreateAnAccountForm,
+    ConfirmAdultForm,
+  }
 
   def handle_params(%{"account_id" => account_id} = _unsigned_params, _uri, %{assigns: %{live_action: :confirm_email}} = socket) do
     {:ok, _command} = MyGroupCollectRegister.Commands.ConfirmEmail.dispatch_command(%{account_id: account_id})
@@ -17,7 +22,7 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
 
   def render(%{live_action: :create_an_account} = assigns) do
     ~H"""
-    <.live_component module={__MODULE__.CreateAnAccountForm} id="create_an_account_form" />
+    <.live_component module={CreateAnAccountForm} id="create_an_account_form" />
     """
   end
 
@@ -48,7 +53,7 @@ defmodule MyGroupCollectRegisterWeb.RegisterLive do
 
   def render(%{live_action: :confirm_adult} = assigns) do
     ~H"""
-    <.live_component module={__MODULE__.ConfirmAdultForm} id="confirm_adult_form" account_id={@account_id} />
+    <.live_component module={ConfirmAdultForm} id="confirm_adult_form" account_id={@account_id} />
     """
   end
 

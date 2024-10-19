@@ -1,4 +1,4 @@
-defmodule MyGroupCollectRegisterWeb.RegisterLive.CreateAnAccountFormFields do
+defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.CreateAnAccountForm.Fields do
   use Ash.Resource, data_layer: :embedded
 
   attributes do

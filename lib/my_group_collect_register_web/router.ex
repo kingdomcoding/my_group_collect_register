@@ -18,6 +18,11 @@ defmodule MyGroupCollectRegisterWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+  end
+
+  scope "/", MyGroupCollectRegisterWeb.Pages do
+    pipe_through :browser
+
     live "/register", RegisterLive, :create_an_account
     live "/register/check-email", RegisterLive, :check_email
     live "/register/confirm-email/:account_id", RegisterLive, :confirm_email
