@@ -1,11 +1,15 @@
 defmodule MyGroupCollectRegister.Commands.Router do
   use Commanded.Commands.Router
 
-  alias MyGroupCollectRegister.Commands.CreateAnAccount
+  alias MyGroupCollectRegister.Commands.{
+    CreateAnAccount,
+    ConfirmEmail,
+  }
 
   defstruct [:account_id]
 
   dispatch(CreateAnAccount, to: __MODULE__, identity: :account_id)
+  dispatch(ConfirmEmail, to: __MODULE__, identity: :account_id)
 
   def execute(_state, %CreateAnAccount{} = command) do
     %{
@@ -25,6 +29,9 @@ defmodule MyGroupCollectRegister.Commands.Router do
     {:ok, event} = MyGroupCollectRegister.Events.AccountCreated.create(params)
   end
 
+  def execute(_state, %ConfirmEmail{account_id: account_id} = command) do
+    {:ok, event} = MyGroupCollectRegister.Events.EmailConfirmed.create(%{account_id: account_id})
+  end
   def apply(state, _event) do
     state
   end

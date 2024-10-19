@@ -1,8 +1,8 @@
 defmodule MyGroupCollectRegisterWeb.RegisterLive do
   use MyGroupCollectRegisterWeb, :live_view
-  
+
   def handle_params(%{"account_id" => account_id} = _unsigned_params, _uri, %{assigns: %{live_action: :confirm_email}} = socket) do
-    # TODO: Dispatch command
+    {:ok, _command} = MyGroupCollectRegister.Commands.ConfirmEmail.dispatch_command(%{account_id: account_id})
 
     {:noreply, push_patch(socket, to: ~p"/register/#{account_id}/confirm-adult")}
   end
