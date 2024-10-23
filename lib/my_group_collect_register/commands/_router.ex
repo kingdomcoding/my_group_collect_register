@@ -7,6 +7,7 @@ defmodule MyGroupCollectRegister.Commands.Router do
     ConfirmAdult,
     SubmitAccountHolderProfile,
     SubmitAddress,
+    AddPassenger,
   }
 
   defstruct [:account_id]
@@ -16,6 +17,7 @@ defmodule MyGroupCollectRegister.Commands.Router do
   dispatch(ConfirmAdult, to: __MODULE__, identity: :account_id)
   dispatch(SubmitAccountHolderProfile, to: __MODULE__, identity: :account_id)
   dispatch(SubmitAddress, to: __MODULE__, identity: :account_id)
+  dispatch(AddPassenger, to: __MODULE__, identity: :account_id)
 
   def execute(_state, %CreateAnAccount{} = command) do
     %{
@@ -81,6 +83,36 @@ defmodule MyGroupCollectRegister.Commands.Router do
     }
 
     {:ok, _event} = MyGroupCollectRegister.Events.AddressSubmitted.create(params)
+  end
+
+  def execute(_state, %AddPassenger{} = command) do
+    %{
+      trip_id: trip_id,
+      passenger_id: passenger_id,
+      account_id: account_id,
+      first_name: first_name,
+      middle_name_or_initial: middle_name_or_initial,
+      last_name: last_name,
+      preferred_name: preferred_name,
+      phone_number: phone_number,
+      date_of_birth: date_of_birth,
+      gender: gender,
+    } = command
+
+    params = %{
+      trip_id: trip_id,
+      passenger_id: passenger_id,
+      account_id: account_id,
+      first_name: first_name,
+      middle_name_or_initial: middle_name_or_initial,
+      last_name: last_name,
+      preferred_name: preferred_name,
+      phone_number: phone_number,
+      date_of_birth: date_of_birth,
+      gender: gender,
+    }
+
+    {:ok, _event} = MyGroupCollectRegister.Events.PassengerAdded.create(params)
   end
 
   def apply(state, _event) do

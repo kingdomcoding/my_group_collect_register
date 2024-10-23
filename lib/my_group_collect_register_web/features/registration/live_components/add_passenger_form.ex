@@ -3,13 +3,14 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.AddPass
 
   import MyGroupCollectRegisterWeb.Features.Registration.Components, only: [radio_group: 1]
 
-  def update(%{account_id: account_id} = _assigns, socket) do
+  def update(assigns, socket) do
     form = AshPhoenix.Form.for_create(__MODULE__.Fields, :submit, domain: MyGroupCollectRegisterWeb.Features.Registration.Domain) |> to_form()
 
     socket =
       socket
       |> assign(:form, form)
-      |> assign(:account_id, account_id)
+      |> assign(:account_id, assigns.account_id)
+      |> assign(:trip_id, assigns.trip_id)
     {:ok, socket}
   end
 
@@ -55,14 +56,19 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.AddPass
 
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, form_struct} ->
-        # TODO
-        
-        # params = %{
-        #   account_id: socket.assigns.account_id,
-        #   date_of_birth: form_struct.date_of_birth
-        # }
+        params = %{
+          trip_id: socket.assigns.trip_id,
+          account_id: socket.assigns.account_id,
+          first_name: form_struct.first_name,
+          middle_name_or_initial: form_struct.middle_name_or_initial,
+          last_name: form_struct.last_name,
+          preferred_name: form_struct.preferred_name,
+          phone_number: form_struct.phone_number,
+          date_of_birth: form_struct.date_of_birth,
+          gender: form_struct.gender,
+        }
 
-        # {:ok, _command} = MyGroupCollectRegister.Commands.ConfirmAdult.dispatch_command(params)
+        {:ok, _command} = MyGroupCollectRegister.Commands.AddPassenger.dispatch_command(params)
 
         send(self(), :confirm_adult_form_submitted)
         {:noreply, socket}
