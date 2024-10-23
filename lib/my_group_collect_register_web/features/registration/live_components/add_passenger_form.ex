@@ -70,7 +70,7 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.AddPass
 
         {:ok, _command} = MyGroupCollectRegister.Commands.AddPassenger.dispatch_command(params)
 
-        send(self(), :confirm_adult_form_submitted)
+        send(self(), :add_passenger_form_submitted)
         {:noreply, socket}
       {:error, form_with_error} ->
         {:noreply, assign(socket, :form, form_with_error)}

@@ -85,6 +85,12 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
     """
   end
 
+  def render(%{live_action: :passengers} = assigns) do
+    ~H"""
+    <h1>Passengers</h1>
+    """
+  end
+
   def handle_info({:create_an_account_form_submitted, account_id}, socket) do
     socket =
       socket
@@ -127,5 +133,13 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
         socket = push_patch(socket, to: ~p"/register/#{socket.assigns.account_id}/add-passenger?#{%{trip_id: socket.assigns.trip_id}}")
         {:noreply, socket}
     end
+  end
+
+  def handle_info(:add_passenger_form_submitted, socket) do
+    socket =
+      socket
+      |> push_patch(to: ~p"/register/#{socket.assigns.trip_id}/passengers?#{%{trip_id: socket.assigns.trip_id}}")
+
+    {:noreply, socket}
   end
 end

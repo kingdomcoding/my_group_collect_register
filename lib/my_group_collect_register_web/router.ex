@@ -31,6 +31,7 @@ defmodule MyGroupCollectRegisterWeb.Router do
     live "/register/:account_id/address", RegisterLive, :address
     live "/register/:account_id/will-you-be-travelling", RegisterLive, :will_you_be_travelling
     live "/register/:account_id/add-passenger", RegisterLive, :add_passenger
+    live "/register/:account_id/passengers", RegisterLive, :passengers
   end
 
   # Other scopes may use custom stacks.
