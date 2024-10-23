@@ -15,5 +15,7 @@ defmodule MyGroupCollectRegister.Domain do
     resource MyGroupCollectRegister.Events.AccountHolderProfileSubmitted
     resource MyGroupCollectRegister.Events.AddressSubmitted
     resource MyGroupCollectRegister.Events.PassengerAdded
+
+    resource MyGroupCollectRegister.ReadModels.Passengers
   end
 end

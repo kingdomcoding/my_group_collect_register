@@ -29,6 +29,7 @@ defmodule MyGroupCollectRegister.Application do
       # Start to serve requests, typically the last entry
       MyGroupCollectRegisterWeb.Endpoint,
       __MODULE__,
+      MyGroupCollectRegister.ReadModels.Supervisor,
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
