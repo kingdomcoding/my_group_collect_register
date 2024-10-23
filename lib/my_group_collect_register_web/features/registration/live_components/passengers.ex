@@ -4,7 +4,13 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.Passeng
   def update(%{account_id: account_id, trip_id: trip_id} = assigns, socket) do
     {:ok, passengers} = MyGroupCollectRegister.ReadModels.Passengers.get_by_account_and_trip(account_id, trip_id)
 
-    {:ok, assign(socket, passengers: passengers)}
+    socket =
+      socket
+      |> assign(account_id: account_id)
+      |> assign(trip_id: trip_id)
+      |> assign(passengers: passengers)
+
+    {:ok, socket}
   end
 
   def render(assigns) do
@@ -46,9 +52,12 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.Passeng
                       </div>
                     <% end %>
                     <div class="flex flex-col items-center justify-center space-y-3 py-5">
-                        <div class="inline-flex items-stretch -space-x-px">
+                        <div class="inline-flex items-stretch -space-x-px gap-4">
                             <button phx-click="add-passenger" class="flex text-sm items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-primary-100 hover:text-primary-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                               Add another passenger
+                            </button>
+                            <button phx-click="next" phx-target={@myself} class="bg-primary flex text-sm items-center justify-center h-full py-1.5 px-3 ml-0 text-white rounded-lg border border-gray-300 hover:bg-primary-100 hover:text-primary-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                              Next
                             </button>
                         </div>
                     </div>
@@ -57,5 +66,10 @@ defmodule MyGroupCollectRegisterWeb.Features.Registration.LiveComponents.Passeng
         </div>
     </section>
     """
+  end
+
+  def handle_event("next", _unsigned_params, socket) do
+    send(self(), :passenger_details_verified)
+    {:noreply, socket}
   end
 end

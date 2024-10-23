@@ -21,6 +21,10 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
     {:noreply, assign(socket, account_id: account_id, trip_id: trip_id)}
   end
 
+  def handle_params(%{"account_id" => account_id, "trip_id" => trip_id, "passenger_id" => passenger_id} = _unsigned_params, _uri, socket) do
+    {:noreply, assign(socket, account_id: account_id, trip_id: trip_id, passenger_id: passenger_id)}
+  end
+
   def handle_params(_unsigned_params, _uri, socket) do
     {:noreply, socket}
   end
@@ -92,6 +96,12 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
     """
   end
 
+  def render(%{live_action: :package} = assigns) do
+    ~H"""
+    Package
+    """
+  end
+
   def handle_event("add-passenger", _unsigned_params, socket) do
     {:noreply, put_flash(socket, :error, "Adding passenger not inculded in this demo")}
   end
@@ -147,7 +157,20 @@ defmodule MyGroupCollectRegisterWeb.Pages.RegisterLive do
   def handle_info(:add_passenger_form_submitted, socket) do
     socket =
       socket
-      |> push_patch(to: ~p"/register/#{socket.assigns.trip_id}/passengers?#{%{trip_id: socket.assigns.trip_id}}")
+      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/passengers?#{%{trip_id: socket.assigns.trip_id}}")
+
+    {:noreply, socket}
+  end
+
+  def handle_info(:passenger_details_verified, socket) do
+    # first_by_account_and_trip
+    {:ok, passengers} = MyGroupCollectRegister.ReadModels.Passengers.get_by_account_and_trip(socket.assigns.account_id, socket.assigns.trip_id)
+
+    %{passenger_id: passenger_id} = Enum.at(passengers, 0)
+
+    socket =
+      socket
+      |> push_patch(to: ~p"/register/#{socket.assigns.account_id}/package?#{%{trip_id: socket.assigns.trip_id, passenger_id: passenger_id}}")
 
     {:noreply, socket}
   end
